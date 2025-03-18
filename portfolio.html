@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rahul Koranga - Portfolio</title>
+    <link rel="stylesheet" href="lol.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Rahul Koranga</h1>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="hero">
+        <h2>Hi, I'm Rahul Koranga</h2>
+        <p>AI/ML & Full-Stack Developer | Passionate about Building Intelligent Systems</p>
+        <a href="#contact" class="btn">Get in Touch</a>
+    </section>
+    
+    <section id="about">
+        <h2>About Me</h2>
+        <p>I am a software developer with expertise in AI/ML, web development, and cloud computing. I have experience working on projects involving real-time applications and intelligent systems.</p>
+    </section>
+    
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="project-card">
+            <img src="https://images.unsplash.com/photo-1561250056-32d1988f5157?q=80&w=1926&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Restaurant">
+            <h3>Digit Recognition</h3>
+            <p>Built a CNN classifier for handwritten digit recognition using TensorFlow and Keras, achieving 98% accuracy.</p>
+        </div>
+        <div class="project-card">
+            <img src="https://images.unsplash.com/photo-1492112007959-c35ae067c37b?q=80&w=1884&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Restaurant">
+            <h3>Fire Detection System</h3>
+            <p>Developed a real-time fire detection system using YOLOv5, fine-tuned on a custom dataset, and deployed on a normal camera.</p>
+        </div>
+        <div class="project-card">
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Restaurant">
+            <h3>Virtual Scene Generator</h3>
+            <p>Built a frontend interface for generating virtual reality scenes using weather-based prompts and a fine-tuned Flux Lite model.</p>
+        </div>
+    </section>
+    
+    <section id="skills">
+        <h2>Skills</h2>
+        <ul>
+            <li>Web Development: HTML, CSS, Tailwind CSS</li>
+            <li>Machine Learning: TensorFlow, PyTorch, Keras</li>
+            <li>Databases: MySQL, Relational Databases</li>
+            <li>Programming: C, C++, Java, Python</li>
+        </ul>
+    </section>
+    
+    <section id="certifications">
+        <h2>Certifications</h2>
+        <p>Google Cloud Platform (GCP) Certified | NPTEL ELITE Certification in GCP</p>
+    </section>
+    
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <p>Email: rahulkoranga30@gmail.com</p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/LinkedIn">LinkedIn Profile</a></p>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 Rahul Koranga. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Basic Three.js setup for a neon effect background
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        
+        const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+        const material = new THREE.MeshStandardMaterial({ color: 0xff00ff, emissive: 0x5500ff, metalness: 0.8, roughness: 0.2 });
+        const torusKnot = new THREE.Mesh(geometry, material);
+        scene.add(torusKnot);
+        
+        const light = new THREE.PointLight(0x0d0d0d, 1, 100);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+        
+        camera.position.z = 50;
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            torusKnot.rotation.x += 0.01;
+            torusKnot.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
