@@ -66,8 +66,8 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p>© 2025 Rahul Koranga. All rights reserved.</p>
             <div className="flex space-x-6">
-              <a href="#" className="hover:text-blue-400 transition-colors duration-300">LinkedIn</a>
-              <a href="#" className="hover:text-blue-400 transition-colors duration-300">GitHub</a>
+              <a href="https://www.linkedin.com/in/rahul-koranga-656785258" className="hover:text-blue-400 transition-colors duration-300">LinkedIn</a>
+              <a href="https://github.com/lol782" className="hover:text-blue-400 transition-colors duration-300">GitHub</a>
               <a href="mailto:rahulkoranga30@gmail.com" className="hover:text-blue-400 transition-colors duration-300">Email</a>
             </div>
           </div>
