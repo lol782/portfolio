@@ -1,4 +1,3 @@
-// Reusable scroll section component
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
@@ -7,8 +6,8 @@ import { getSectionScrollProgress } from '@/lib/scrollUtils';
 
 const ScrollSection = ({ 
   id, 
-  bgColor, 
-  textColor = 'text-white',
+  bgColor = 'bg-white/90', 
+  textColor = 'text-gray-800',
   children 
 }) => {
   const sectionRef = useRef(null);
@@ -36,16 +35,16 @@ const ScrollSection = ({
   const opacity = Math.min(progress * 2, 1);
   
   // Calculate transform based on scroll progress
-  const yOffset = (1 - progress) * 50;
+  const yOffset = (1 - progress) * 30;
   
   return (
     <section
       id={id}
       ref={sectionRef}
-      className={`min-h-screen ${bgColor} ${textColor} flex items-center justify-center relative`}
+      className={`min-h-screen ${bgColor} backdrop-blur-sm ${textColor} flex items-center justify-center relative`}
     >
       <div 
-        className="container mx-auto px-4 py-16 transition-all duration-500 ease-out"
+        className="container mx-auto px-4 py-16 transition-all duration-700 ease-out"
         style={{ 
           opacity: opacity, 
           transform: `translateY(${yOffset}px)`,

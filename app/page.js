@@ -29,10 +29,10 @@ export default function Home() {
     <main className="relative">
       {/* Loading Screen */}
       {!isLoaded && (
-        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-gradient-to-br from-blue-50 to-purple-50 z-50 flex items-center justify-center">
           <div className="text-center">
             <div className="inline-block w-16 h-16 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
-            <p className="mt-4 text-white text-xl">Loading experience...</p>
+            <p className="mt-4 text-gray-700 text-xl">Loading experience...</p>
           </div>
         </div>
       )}
@@ -47,23 +47,30 @@ export default function Home() {
       
       {/* Content Sections */}
       <div className="relative z-10">
-        <ScrollSection id="about" bgColor="bg-black/60 backdrop-blur-sm">
+        <ScrollSection id="about" bgColor="bg-white/90">
           <About />
         </ScrollSection>
         
-        <ScrollSection id="projects" bgColor="bg-blue-900/60 backdrop-blur-sm">
+        <ScrollSection id="projects" bgColor="bg-gray-50/90">
           <Projects />
         </ScrollSection>
         
-        <ScrollSection id="contact" bgColor="bg-black/60 backdrop-blur-sm">
+        <ScrollSection id="contact" bgColor="bg-white/90">
           <Contact />
         </ScrollSection>
       </div>
       
       {/* Footer */}
-      <footer className="relative z-10 bg-black py-6 text-center text-white">
+      <footer className="relative z-10 bg-gray-800 py-8 text-center text-white">
         <div className="container mx-auto px-4">
-          <p>© 2025 Portfolio. All rights reserved.</p>
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p>© 2025 Rahul Koranga. All rights reserved.</p>
+            <div className="flex space-x-6">
+              <a href="#" className="hover:text-blue-400 transition-colors duration-300">LinkedIn</a>
+              <a href="#" className="hover:text-blue-400 transition-colors duration-300">GitHub</a>
+              <a href="mailto:rahulkoranga30@gmail.com" className="hover:text-blue-400 transition-colors duration-300">Email</a>
+            </div>
+          </div>
         </div>
       </footer>
     </main>

@@ -1,4 +1,3 @@
-// Navigation component
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -23,19 +22,25 @@ const Navbar = () => {
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-black/80 backdrop-blur-sm py-4' 
+          ? 'bg-white/95 backdrop-blur-md shadow-lg py-4' 
           : 'bg-transparent py-6'
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <div className="text-white font-bold text-2xl">Portfolio</div>
+        <div className={`font-bold text-2xl transition-colors duration-300 ${
+          isScrolled ? 'text-gray-800' : 'text-white'
+        }`}>
+          Rahul Koranga
+        </div>
         
         <nav className="hidden md:block">
           <ul className="flex space-x-8">
             <li>
               <button
                 onClick={() => scrollToSection('about')}
-                className="text-white hover:text-gray-300 transition-colors"
+                className={`transition-colors duration-300 hover:text-blue-600 ${
+                  isScrolled ? 'text-gray-700' : 'text-white hover:text-blue-300'
+                }`}
               >
                 About
               </button>
@@ -43,7 +48,9 @@ const Navbar = () => {
             <li>
               <button
                 onClick={() => scrollToSection('projects')}
-                className="text-white hover:text-gray-300 transition-colors"
+                className={`transition-colors duration-300 hover:text-blue-600 ${
+                  isScrolled ? 'text-gray-700' : 'text-white hover:text-blue-300'
+                }`}
               >
                 Projects
               </button>
@@ -51,7 +58,9 @@ const Navbar = () => {
             <li>
               <button
                 onClick={() => scrollToSection('contact')}
-                className="text-white hover:text-gray-300 transition-colors"
+                className={`transition-colors duration-300 hover:text-blue-600 ${
+                  isScrolled ? 'text-gray-700' : 'text-white hover:text-blue-300'
+                }`}
               >
                 Contact
               </button>
@@ -59,7 +68,9 @@ const Navbar = () => {
           </ul>
         </nav>
         
-        <button className="md:hidden text-white">
+        <button className={`md:hidden transition-colors duration-300 ${
+          isScrolled ? 'text-gray-800' : 'text-white'
+        }`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

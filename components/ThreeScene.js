@@ -18,9 +18,10 @@ const ThreeScene = () => {
   useEffect(() => {
     if (!containerRef.current) return;
     
-    // Create scene
+    // Create scene with light background
     const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x000011, 1, 1000);
+    scene.fog = new THREE.Fog(0xf0f8ff, 50, 1000);
+    scene.background = new THREE.Color(0xf0f8ff); // Light blue sky
     sceneRef.current = scene;
     
     // Create camera
@@ -30,38 +31,44 @@ const ThreeScene = () => {
       0.1,
       1000
     );
-    camera.position.set(0, 3, 5);
+    camera.position.set(0, 4, 8);
     camera.lookAt(0, 1, -10);
     cameraRef.current = camera;
     
     // Create renderer
     const renderer = new THREE.WebGLRenderer({ 
       antialias: true,
-      alpha: true,
+      alpha: false,
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x000011, 1);
+    renderer.setClearColor(0xf0f8ff, 1);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     containerRef.current.appendChild(renderer.domElement);
     rendererRef.current = renderer;
     
-    // Create lights
-    const ambientLight = new THREE.AmbientLight(0x404080, 0.3);
+    // Create lights for daytime scene
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
     
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(10, 10, 5);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    directionalLight.position.set(50, 50, 25);
     directionalLight.castShadow = true;
     directionalLight.shadow.mapSize.width = 2048;
     directionalLight.shadow.mapSize.height = 2048;
+    directionalLight.shadow.camera.near = 0.5;
+    directionalLight.shadow.camera.far = 500;
+    directionalLight.shadow.camera.left = -100;
+    directionalLight.shadow.camera.right = 100;
+    directionalLight.shadow.camera.top = 100;
+    directionalLight.shadow.camera.bottom = -100;
     scene.add(directionalLight);
     
-    // Create road with lane markings
+    // Create road with better materials
     const roadGeometry = new THREE.PlaneGeometry(20, 2000, 1, 200);
     const roadMaterial = new THREE.MeshLambertMaterial({
-      color: 0x222222,
+      color: 0x444444,
     });
     
     const road = new THREE.Mesh(roadGeometry, roadMaterial);
@@ -81,15 +88,15 @@ const ThreeScene = () => {
       scene.add(marking);
     }
     
-    // Create enhanced car
+    // Create enhanced car with better materials and sharper details
     const carGroup = new THREE.Group();
     
-    // Car body - main chassis
+    // Car body - main chassis with higher quality
     const bodyGeometry = new THREE.BoxGeometry(2, 0.6, 4);
     const bodyMaterial = new THREE.MeshPhongMaterial({ 
-      color: 0x1a5490,
+      color: 0x2563eb,
       shininess: 100,
-      specular: 0x111111
+      specular: 0x444444
     });
     const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
     body.position.y = 0.6;
@@ -99,7 +106,7 @@ const ThreeScene = () => {
     // Car roof/cabin
     const roofGeometry = new THREE.BoxGeometry(1.6, 0.8, 2);
     const roofMaterial = new THREE.MeshPhongMaterial({ 
-      color: 0x1a5490,
+      color: 0x2563eb,
       shininess: 100
     });
     const roof = new THREE.Mesh(roofGeometry, roofMaterial);
@@ -113,18 +120,18 @@ const ThreeScene = () => {
     const windshieldMaterial = new THREE.MeshPhongMaterial({ 
       color: 0x87ceeb,
       transparent: true,
-      opacity: 0.3
+      opacity: 0.7
     });
     const windshield = new THREE.Mesh(windshieldGeometry, windshieldMaterial);
     windshield.position.set(0, 1.3, 0.7);
     windshield.rotation.x = -0.2;
     carGroup.add(windshield);
     
-    // Wheels with rims
+    // Wheels with better detail
     const wheelGeometry = new THREE.CylinderGeometry(0.4, 0.4, 0.3, 16);
-    const wheelMaterial = new THREE.MeshPhongMaterial({ color: 0x111111 });
+    const wheelMaterial = new THREE.MeshPhongMaterial({ color: 0x222222 });
     const rimGeometry = new THREE.CylinderGeometry(0.35, 0.35, 0.32, 16);
-    const rimMaterial = new THREE.MeshPhongMaterial({ color: 0x888888 });
+    const rimMaterial = new THREE.MeshPhongMaterial({ color: 0xcccccc });
     
     // Create wheels with rims
     const wheelPositions = [
@@ -151,12 +158,12 @@ const ThreeScene = () => {
       carGroup.add(wheelGroup);
     });
     
-    // Enhanced headlights with glow effect
+    // Headlights
     const headlightGeometry = new THREE.SphereGeometry(0.15, 16, 16);
     const headlightMaterial = new THREE.MeshPhongMaterial({ 
-      color: 0xffffcc,
-      emissive: 0xffffaa,
-      emissiveIntensity: 0.5
+      color: 0xffffff,
+      emissive: 0xffffcc,
+      emissiveIntensity: 0.3
     });
     
     const headlightL = new THREE.Mesh(headlightGeometry, headlightMaterial);
@@ -167,30 +174,12 @@ const ThreeScene = () => {
     headlightR.position.set(0.7, 0.6, 2);
     carGroup.add(headlightR);
     
-    // Add headlight beams
-    const beamGeometry = new THREE.ConeGeometry(2, 10, 8, 1, true);
-    const beamMaterial = new THREE.MeshBasicMaterial({ 
-      color: 0xffffaa,
-      transparent: true,
-      opacity: 0.1
-    });
-    
-    const beamL = new THREE.Mesh(beamGeometry, beamMaterial);
-    beamL.position.set(-0.7, 0.6, -3);
-    beamL.rotation.x = Math.PI;
-    carGroup.add(beamL);
-    
-    const beamR = new THREE.Mesh(beamGeometry, beamMaterial);
-    beamR.position.set(0.7, 0.6, -3);
-    beamR.rotation.x = Math.PI;
-    carGroup.add(beamR);
-    
     // Taillights
     const taillightGeometry = new THREE.SphereGeometry(0.1, 16, 16);
     const taillightMaterial = new THREE.MeshPhongMaterial({ 
-      color: 0xff0000,
+      color: 0xff4444,
       emissive: 0x440000,
-      emissiveIntensity: 0.3
+      emissiveIntensity: 0.2
     });
     
     const taillightL = new THREE.Mesh(taillightGeometry, taillightMaterial);
@@ -208,13 +197,13 @@ const ThreeScene = () => {
     scene.add(carGroup);
     carRef.current = carGroup;
     
-    // Add environment - buildings and streetlights
+    // Add environment - buildings and trees for daytime scene
     for (let i = 0; i < 50; i++) {
       const side = Math.random() > 0.5 ? 1 : -1;
       const distance = 12 + Math.random() * 8;
       
-      if (Math.random() > 0.3) {
-        // Create buildings
+      if (Math.random() > 0.4) {
+        // Create buildings with light colors
         const buildingHeight = 5 + Math.random() * 15;
         const buildingGeometry = new THREE.BoxGeometry(
           3 + Math.random() * 4,
@@ -222,7 +211,7 @@ const ThreeScene = () => {
           3 + Math.random() * 4
         );
         const buildingMaterial = new THREE.MeshLambertMaterial({ 
-          color: new THREE.Color().setHSL(0.6, 0.2, 0.1 + Math.random() * 0.2)
+          color: new THREE.Color().setHSL(0.1, 0.3, 0.7 + Math.random() * 0.2)
         });
         const building = new THREE.Mesh(buildingGeometry, buildingMaterial);
         building.position.set(
@@ -231,6 +220,7 @@ const ThreeScene = () => {
           -i * 25 - Math.random() * 10
         );
         building.castShadow = true;
+        building.receiveShadow = true;
         scene.add(building);
         
         // Add windows
@@ -239,7 +229,7 @@ const ThreeScene = () => {
             if (Math.random() > 0.3) {
               const windowGeometry = new THREE.PlaneGeometry(0.3, 0.4);
               const windowMaterial = new THREE.MeshBasicMaterial({ 
-                color: 0xffffaa,
+                color: 0x87ceeb,
                 transparent: true,
                 opacity: 0.8
               });
@@ -255,47 +245,41 @@ const ThreeScene = () => {
           }
         }
       } else {
-        // Create streetlights
-        const poleGeometry = new THREE.CylinderGeometry(0.1, 0.1, 4, 8);
-        const poleMaterial = new THREE.MeshLambertMaterial({ color: 0x444444 });
-        const pole = new THREE.Mesh(poleGeometry, poleMaterial);
-        pole.position.set(side * 11, 2, -i * 30);
-        pole.castShadow = true;
-        scene.add(pole);
+        // Create trees
+        const trunkGeometry = new THREE.CylinderGeometry(0.3, 0.4, 3, 8);
+        const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0x8b4513 });
+        const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+        trunk.position.set(side * (distance + 2), 1.5, -i * 30);
+        trunk.castShadow = true;
+        trunk.receiveShadow = true;
+        scene.add(trunk);
         
-        const lampGeometry = new THREE.SphereGeometry(0.3, 16, 16);
-        const lampMaterial = new THREE.MeshPhongMaterial({ 
-          color: 0xffffaa,
-          emissive: 0xffffaa,
-          emissiveIntensity: 0.5
-        });
-        const lamp = new THREE.Mesh(lampGeometry, lampMaterial);
-        lamp.position.set(side * 11, 4, -i * 30);
-        scene.add(lamp);
-        
-        // Add point light for streetlight
-        const streetLight = new THREE.PointLight(0xffffaa, 0.5, 20);
-        streetLight.position.set(side * 11, 4, -i * 30);
-        streetLight.castShadow = true;
-        scene.add(streetLight);
+        const leavesGeometry = new THREE.SphereGeometry(2, 16, 16);
+        const leavesMaterial = new THREE.MeshLambertMaterial({ color: 0x228b22 });
+        const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
+        leaves.position.set(side * (distance + 2), 4, -i * 30);
+        leaves.castShadow = true;
+        leaves.receiveShadow = true;
+        scene.add(leaves);
       }
     }
     
-    // Add stars
-    const starGeometry = new THREE.BufferGeometry();
-    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 2 });
-    
-    const starVertices = [];
-    for (let i = 0; i < 1000; i++) {
-      const x = (Math.random() - 0.5) * 2000;
-      const y = Math.random() * 500 + 50;
-      const z = (Math.random() - 0.5) * 2000;
-      starVertices.push(x, y, z);
+    // Add clouds
+    for (let i = 0; i < 20; i++) {
+      const cloudGeometry = new THREE.SphereGeometry(5 + Math.random() * 3, 16, 16);
+      const cloudMaterial = new THREE.MeshBasicMaterial({ 
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.8
+      });
+      const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
+      cloud.position.set(
+        (Math.random() - 0.5) * 200,
+        30 + Math.random() * 20,
+        (Math.random() - 0.5) * 500
+      );
+      scene.add(cloud);
     }
-    
-    starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-    const stars = new THREE.Points(starGeometry, starMaterial);
-    scene.add(stars);
     
     // Handle window resize
     const handleResize = () => {
@@ -310,12 +294,6 @@ const ThreeScene = () => {
     // Animation loop
     const animate = () => {
       requestAnimationFrame(animate);
-      
-      // Rotate stars slowly
-      if (stars) {
-        stars.rotation.y += 0.0005;
-      }
-      
       renderer.render(scene, camera);
     };
     
@@ -339,18 +317,18 @@ const ThreeScene = () => {
     const zPosition = -scrollProgress * maxTravel;
     
     // Smooth camera movement
-    cameraRef.current.position.z = zPosition + 5;
-    cameraRef.current.position.y = 3 + Math.sin(scrollProgress * Math.PI) * 0.5;
+    cameraRef.current.position.z = zPosition + 8;
+    cameraRef.current.position.y = 4 + Math.sin(scrollProgress * Math.PI) * 0.5;
     
-    // Car follows camera
+    // Car follows camera with better positioning
     carRef.current.position.z = zPosition - 2;
     
     // Add dynamic car movement
-    carRef.current.rotation.y = Math.sin(scrollProgress * Math.PI * 3) * 0.03;
-    carRef.current.position.x = Math.sin(scrollProgress * Math.PI * 4) * 0.3;
+    carRef.current.rotation.y = Math.sin(scrollProgress * Math.PI * 3) * 0.02;
+    carRef.current.position.x = Math.sin(scrollProgress * Math.PI * 4) * 0.2;
     
     // Slight car bounce
-    carRef.current.position.y = Math.sin(scrollProgress * Math.PI * 8) * 0.05;
+    carRef.current.position.y = Math.sin(scrollProgress * Math.PI * 8) * 0.03;
   }, [scrollProgress]);
   
   return (
