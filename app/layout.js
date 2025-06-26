@@ -8,9 +8,7 @@ export const metadata = {
   description: 'An immersive portfolio with 3D car animation on scroll',
 };
 
-export default function RootLayout({
-  children,
-}) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>{children}</body>
