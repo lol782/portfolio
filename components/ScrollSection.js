@@ -1,44 +1,56 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
-export default function ScrollSection({ children, className = '' }) {
+const ScrollSection = ({ 
+  id, 
+  bgColor = 'bg-white/80', 
+  textColor = 'text-gray-800',
+  children 
+}) => {
+  const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-
+  
   useEffect(() => {
     // Only run on client side
-    if (typeof window === 'undefined' || typeof document === 'undefined') return;
-
+    if (typeof window === 'undefined') return;
+    
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
       {
         threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
+        rootMargin: '0px 0px -50px 0px'
       }
     );
-
-    const element = document.querySelector(`[data-scroll-section]`);
-    if (element) {
-      observer.observe(element);
+    
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
-
+    
     return () => {
-      if (element) {
-        observer.unobserve(element);
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
       }
     };
   }, []);
-
+  
   return (
-    <div 
-      data-scroll-section
-      className={`transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      } ${className}`}
+    <section
+      id={id}
+      ref={sectionRef}
+      className={`min-h-screen ${bgColor} backdrop-blur-sm ${textColor} flex items-center justify-center relative`}
     >
-      {children}
-    </div>
+      <div 
+        className={`container mx-auto px-4 py-16 transition-all duration-1000 ease-out ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}
+      >
+        {children}
+      </div>
+    </section>
   );
-}
+};
+
+export default ScrollSection;

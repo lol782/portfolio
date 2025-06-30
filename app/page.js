@@ -47,15 +47,15 @@ export default function Home() {
       
       {/* Content Sections */}
       <div className="relative z-10">
-        <ScrollSection id="about" bgColor="bg-white/70">
+        <ScrollSection id="about" bgColor="bg-white/80">
           <About />
         </ScrollSection>
         
-        <ScrollSection id="projects" bgColor="bg-gray-50/70">
+        <ScrollSection id="projects" bgColor="bg-gray-50/80">
           <Projects />
         </ScrollSection>
         
-        <ScrollSection id="contact" bgColor="bg-white/70">
+        <ScrollSection id="contact" bgColor="bg-white/80">
           <Contact />
         </ScrollSection>
       </div>

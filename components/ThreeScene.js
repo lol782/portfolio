@@ -49,10 +49,10 @@ const ThreeScene = () => {
     rendererRef.current = renderer;
     
     // Create lights for daytime scene
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
     scene.add(ambientLight);
     
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
     directionalLight.position.set(50, 50, 25);
     directionalLight.castShadow = true;
     directionalLight.shadow.mapSize.width = 2048;
@@ -270,7 +270,7 @@ const ThreeScene = () => {
       const cloudMaterial = new THREE.MeshBasicMaterial({ 
         color: 0xffffff,
         transparent: true,
-        opacity: 0.8
+        opacity: 0.9
       });
       const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
       cloud.position.set(
