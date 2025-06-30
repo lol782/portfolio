@@ -1,1 +1,1 @@
-# you can acesses it here -https://685d2005bb46802448553499--lolilil.netlify.app/
+# you can acesses it here -https://lolilil.netlify.app/
