@@ -9,6 +9,13 @@ const About = () => {
     setIsVisible(true);
   }, []);
 
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className={`max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
       <div className="text-center space-y-8">
@@ -29,7 +36,10 @@ const About = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-          <button className="group px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl shadow-lg">
+          <button 
+            onClick={() => scrollToSection('projects')}
+            className="group px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl shadow-lg"
+          >
             <span className="flex items-center justify-center gap-2">
               View Projects
               <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,7 +47,10 @@ const About = () => {
               </svg>
             </span>
           </button>
-          <button className="px-8 py-4 border-2 border-gray-300 text-gray-700 hover:bg-gray-100 hover:border-gray-400 rounded-lg transition-all duration-300 transform hover:scale-105">
+          <button 
+            onClick={() => scrollToSection('contact')}
+            className="px-8 py-4 border-2 border-gray-300 text-gray-700 hover:bg-gray-100 hover:border-gray-400 rounded-lg transition-all duration-300 transform hover:scale-105"
+          >
             Contact Me
           </button>
         </div>

@@ -6,7 +6,7 @@ import { getSectionScrollProgress } from '@/lib/scrollUtils';
 
 const ScrollSection = ({ 
   id, 
-  bgColor = 'bg-white/90', 
+  bgColor = 'bg-white/70', 
   textColor = 'text-gray-800',
   children 
 }) => {
@@ -31,11 +31,11 @@ const ScrollSection = ({
     };
   }, [scrollY, height]);
   
-  // Calculate opacity based on scroll progress
-  const opacity = Math.min(progress * 2, 1);
+  // Calculate opacity based on scroll progress - delayed fade
+  const opacity = Math.min((progress - 0.2) * 2.5, 1);
   
-  // Calculate transform based on scroll progress
-  const yOffset = (1 - progress) * 30;
+  // Calculate transform based on scroll progress - delayed animation
+  const yOffset = Math.max((0.8 - progress) * 50, 0);
   
   return (
     <section
@@ -46,7 +46,7 @@ const ScrollSection = ({
       <div 
         className="container mx-auto px-4 py-16 transition-all duration-700 ease-out"
         style={{ 
-          opacity: opacity, 
+          opacity: Math.max(opacity, 0), 
           transform: `translateY(${yOffset}px)`,
         }}
       >
