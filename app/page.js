@@ -1,78 +1,112 @@
 'use client';
 
-import { Suspense, useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
-import ScrollSection from '@/components/ScrollSection';
-import About from '@/components/About';
-import Projects from '@/components/Projects';
-import Contact from '@/components/Contact';
-
-// Dynamically import ThreeScene with no SSR
-const ThreeScene = dynamic(() => import('@/components/ThreeScene'), {
-  ssr: false
-});
+import HeroSection from '@/components/HeroSection';
+import ProjectSection from '@/components/ProjectSection';
+import DigitRecognitionSection from '@/components/DigitRecognitionSection';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
   
   useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 1000);
-    
-    return () => clearTimeout(timer);
+    setIsLoaded(true);
   }, []);
   
   return (
-    <main className="relative">
-      {/* Loading Screen */}
-      {!isLoaded && (
-        <div className="fixed inset-0 bg-gradient-to-br from-blue-50 to-purple-50 z-50 flex items-center justify-center">
-          <div className="text-center">
-            <div className="inline-block w-16 h-16 border-t-4 border-blue-500 border-solid rounded-full animate-spin"></div>
-            <p className="mt-4 text-gray-700 text-xl">Loading experience...</p>
-          </div>
-        </div>
-      )}
-      
-      {/* Three.js Background */}
-      <Suspense fallback={null}>
-        <ThreeScene />
-      </Suspense>
-      
+    <div className="bg-gradient-to-br from-gray-900 via-black to-gray-900 min-h-screen text-white">
       {/* Navigation */}
       <Navbar />
       
-      {/* Content Sections */}
-      <div className="relative z-10">
-        <ScrollSection id="about" bgColor="bg-white/80">
-          <About />
-        </ScrollSection>
-        
-        <ScrollSection id="projects" bgColor="bg-gray-50/80">
-          <Projects />
-        </ScrollSection>
-        
-        <ScrollSection id="contact" bgColor="bg-white/80">
-          <Contact />
-        </ScrollSection>
-      </div>
+      {/* Hero Section */}
+      <HeroSection />
+      
+      {/* Museum Explorer Project */}
+      <ProjectSection 
+        id="project-1"
+        title="Museum Explorer"
+        subtitle="Full-Stack Museum Booking Platform"
+        description="Seamless bookings powered by AI"
+        gradientFrom="#1e3a8a"
+        gradientTo="#3b82f6"
+        projectLink="https://github.com/lol782/booking-system"
+        techStack={["Django", "React", "FastAPI", "Gemini AI", "JWT", "TypeScript"]}
+        features={[
+          "Full-stack development with React + Django REST Framework",
+          "JWT-based authentication system for secure access", 
+          "AI-powered FastAPI chatbot using Google Gemini 2.0 Flash",
+          "Glassmorphism UI with TypeScript",
+          "Conversational bookings and fuzzy search matching"
+        ]}
+        highlights={[
+          "Designed API with focus on clean developer experience",
+          "Robust and scalable access control layer", 
+          "Increased user engagement through AI integration",
+          "Optimized UX with responsive design and intuitive navigation"
+        ]}
+        impact="Boosted accessibility while contributing to better waste management by reducing manual query handling"
+      />
+      
+      {/* Kumaoni Chatbot Project */}
+      <ProjectSection 
+        id="project-2"
+        title="Kumaoni Regional Chatbot"
+        subtitle="AI-Powered Regional Language Assistant"
+        description="Bridging language barriers with RAG technology"
+        gradientFrom="#0066ff"
+        gradientTo="#2563eb"
+        projectLink="https://github.com/lol782/RAG-powered-chatbot-for-Kumaoni-language-preservation"
+        techStack={["FastAPI", "React", "FAISS", "Gemini API", "RAG", "ngrok"]}
+        features={[
+          "RAG implementation with ~1860 custom Kumaoni examples",
+          "Custom data pipeline from Google to JSON storage",
+          "Gemini API embeddings with FAISS vector store",
+          "React frontend with FastAPI backend",
+          "Real-time queries through ngrok-exposed API"
+        ]}
+        highlights={[
+          "Robust data pipeline for regional language processing",
+          "Cost-optimized by minimizing prompt length",
+          "Efficient natural dialogue retrieval",
+          "Avoided expensive LLM fine-tuning through smart prompting"
+        ]}
+        impact="Preserved regional language heritage while providing accessible communication tools"
+      />
+      
+      {/* Eco-Connect Project */}
+      <ProjectSection 
+        id="project-3"
+        title="Eco-Connect"
+        subtitle="Smart Waste Management Platform"
+        description="AI-powered sustainability for smarter communities"
+        gradientFrom="#7c3aed"
+        gradientTo="#a855f7"
+        projectLink="https://drive.google.com/drive/folders/1HKQlv5i_yytEvHeeO1Iujf7oOLsZ2O16"
+        techStack={["Flutter", "FastAPI", "LangChain", "SQLite", "Gemini AI", "Railway"]}
+        features={[
+          "Led cross-functional team in comprehensive platform development",
+          "AI-powered waste classification with custom ML models",
+          "LangChain integration with prompt templates",
+          "Gemini AI-powered Eco-AI chatbot for guidance",
+          "Flutter frontend with SQLite backend",
+          "Reward system for sustainable behavior"
+        ]}
+        highlights={[
+          "Deployed via FastAPI on Railway platform",
+          "Real-time tracking and community engagement",
+          "Secure payment integration",
+          "Effective communication to cross-functional stakeholders"
+        ]}
+        impact="Enhanced community sustainability engagement with measurable environmental impact"
+      />
+      
+      {/* Digit Recognition Project */}
+      <DigitRecognitionSection />
       
       {/* Footer */}
-      <footer className="relative z-10 bg-gray-800 py-8 text-center text-white">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p>© 2025 Rahul Koranga. All rights reserved.</p>
-            <div className="flex space-x-6">
-              <a href="https://www.linkedin.com/in/rahul-koranga-656785258" className="hover:text-blue-400 transition-colors duration-300">LinkedIn</a>
-              <a href="https://github.com/lol782" className="hover:text-blue-400 transition-colors duration-300">GitHub</a>
-              <a href="mailto:rahulkoranga30@gmail.com" className="hover:text-blue-400 transition-colors duration-300">Email</a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </main>
+      <Footer />
+    </div>
   );
 }
