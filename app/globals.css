@@ -76,7 +76,95 @@
   * {
     @apply border-border;
   }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4c1d95;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6d28d9;
+}
+
+/* Glassmorphism utility classes */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Skill icons with transparent white backgrounds */
+.skill-icon-container {
+  position: relative;
+}
+
+.skill-icon {
+  mix-blend-mode: screen;
+  filter: brightness(1.1) contrast(1.1);
+}
+
+/* Alternative approach - remove white/light backgrounds */
+.skill-icon-alt {
+  background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.1) 70%);
+  border-radius: 8px;
+  padding: 2px;
+}
+
+/* Custom Certification Icons */
+.cert-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+/* PwC Icon - Larger size with fallback */
+.cert-icon-pwc {
+  background-image: url('https://logos-world.net/wp-content/uploads/2020/09/PwC-Logo.png');
+  width: 28px;
+  height: 28px;
+  background-color: #ff6600;
+  background-size: 80%;
+}
+
+/* Django Icon with fallback */
+.cert-icon-django {
+  background-image: url('https://static.djangoproject.com/img/logos/django-logo-negative.svg');
+  background-color: #092e20;
+  background-size: 80%;
+}
+
+/* University of Michigan Icon */
+.cert-icon-umich {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/c/c1/University_of_Michigan_logo.svg');
+  background-color: #00274c;
 }
